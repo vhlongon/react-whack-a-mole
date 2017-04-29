@@ -27,7 +27,7 @@ const Hole = ({ id, isActive, onMoleClick }) => {
 };
 
 Hole.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   isActive: PropTypes.bool,
 };
 

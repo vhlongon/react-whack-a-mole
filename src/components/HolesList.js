@@ -1,16 +1,15 @@
 import React from 'react';
 import Hole from './Hole';
 import PropTypes from 'prop-types';
-import uuid from 'uuid';
 import './HolesList.css';
 
 const HolesList = ({ items, onMoleClick }) => (
   <div className="holes-list" >
     {
-      items.map(({ isActive }, i) =>
+      items.map(({ isActive, id }) =>
         <Hole
-          key={i}
-          id={i}
+          key={id}
+          id={id}
           isActive={isActive}
           onMoleClick={onMoleClick}
         />
