@@ -1,16 +1,18 @@
 import React from 'react';
 import Hole from './Hole';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import './HolesList.css';
 
-const HolesList = ({ items }) => (
+const HolesList = ({ items, onMoleClick }) => (
   <div className="holes-list" >
     {
-      items.map(({ isActive }, index) =>
+      items.map(({ isActive }, i) =>
         <Hole
-          key={index}
-          id={index}
+          key={i}
+          id={i}
           isActive={isActive}
+          onMoleClick={onMoleClick}
         />
       )
     }
@@ -23,6 +25,7 @@ HolesList.defaultProps = {
 
 HolesList.propTypes = {
   items: PropTypes.array.isRequired,
+  onMoleClick: PropTypes.func.isRequired
 };
 
 export default HolesList;
