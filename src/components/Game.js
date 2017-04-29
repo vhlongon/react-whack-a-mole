@@ -24,7 +24,7 @@ class Game extends Component {
     this.setState(prevState => ({
       score: 0,
       timeUp: false,
-      holes: prevState.holes.map(hole => hole.isActive = false)
+      holes: prevState.holes.map(hole => ({...hole, isActive: false}))
     }));
   }
 
