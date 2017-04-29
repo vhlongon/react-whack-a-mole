@@ -1,3 +1,7 @@
+.scoreboard {
+  margin-top: 2em;
+}
+
 .scoreboard__score {
   background:rgba(255,255,255,0.2);
   padding:0 3rem;

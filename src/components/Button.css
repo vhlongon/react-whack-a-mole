@@ -1,0 +1,28 @@
+.btn, 
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 2em;
+    line-height: normal;
+    overflow: visible;
+    padding: 1em;
+    background:rgba(255,255,255,0.2);
+    padding: 1.5rem;
+    line-height:1;
+    border-radius:1rem;
+    outline: none;
+    -webkit-appearance: button; /* for input */
+    -webkit-user-select: none; /* for button */
+       -moz-user-select: none;
+        -ms-user-select: none; 
+        user-select: none;
+}
+
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
