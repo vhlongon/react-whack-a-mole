@@ -24,7 +24,6 @@ class Hole extends Component {
   }
 
   render() {
-    console.count('Hole');
     const { id, isActive } = this.props;
     const classes = classnames('hole', `hole${id}`, { 'up': isActive });
     return (
@@ -40,30 +39,3 @@ class Hole extends Component {
 }
 
 export default Hole;
-
-/*const Hole = ({ id, isActive, onMoleClick }) => {
-  console.count('Hole');
-  const handleClick = e => {
-    // if the click is not from an actual user click return, no cheating!
-    if (!e.isTrusted) return;
-    onMoleClick(id);
-  };
-
-  const classes = classnames('hole', `hole${id}`, { 'up': isActive });
-  return (
-    <div className={classes}>
-      <div
-        className="hole__mole"
-        style={{ backgroundImage: `url(${mole})` }}
-        onClick={handleClick}
-      />
-    </div>
-  );
-};
-
-Hole.propTypes = {
-  id: PropTypes.string.isRequired,
-  isActive: PropTypes.bool,
-};
-
-export default Hole;*/
