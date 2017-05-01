@@ -1,20 +1,55 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import mole from '../images/mole.svg';
 import classnames from 'classnames';
 import './Hole.css';
 
 
+class Hole extends Component {
 
-const Hole = ({ id, isActive, onMoleClick }) => {
+  static propTypes = {
+    id: PropTypes.string.isRequired,
+    isActive: PropTypes.bool,
+  }
+ 
+  handleClick = e => {
+    // if the click is not from an actual user click return, no cheating!
+    if (!e.isTrusted) return;
+    const { onMoleClick, id } = this.props;
+    onMoleClick(id);
+  }
 
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return nextProps.isActive !== this.props.isActive;
+  }
+
+  render() {
+    console.count('Hole');
+    const { id, isActive } = this.props;
+    const classes = classnames('hole', `hole${id}`, { 'up': isActive });
+    return (
+      <div className={classes}>
+        <div
+          className="hole__mole"
+          style={{ backgroundImage: `url(${mole})` }}
+          onClick={this.handleClick}
+        />
+      </div>
+    );
+  }
+}
+
+export default Hole;
+
+/*const Hole = ({ id, isActive, onMoleClick }) => {
+  console.count('Hole');
   const handleClick = e => {
     // if the click is not from an actual user click return, no cheating!
     if (!e.isTrusted) return;
     onMoleClick(id);
   };
 
-  const classes = classnames('hole', `hole${id}`, {'up': isActive});
+  const classes = classnames('hole', `hole${id}`, { 'up': isActive });
   return (
     <div className={classes}>
       <div
@@ -31,4 +66,4 @@ Hole.propTypes = {
   isActive: PropTypes.bool,
 };
 
-export default Hole;
+export default Hole;*/

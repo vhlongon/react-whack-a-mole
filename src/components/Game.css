@@ -1,6 +1,6 @@
 .game {
   position: relative;
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
