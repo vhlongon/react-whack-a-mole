@@ -79,6 +79,14 @@
     
 }
 
+.timeup__text:before {
+  content: attr(data-text);
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  text-shadow: 2px 2px 30px rgba(0,0,0,0.6);
+}
+
 .timeup__text:after {
     content: attr(data-text);
     width: 100%;

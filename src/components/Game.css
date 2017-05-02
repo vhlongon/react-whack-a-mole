@@ -11,3 +11,9 @@
   position: absolute;
   right: 0;
 }
+
+.game__placeholder-text {
+  font-size: 48px;
+  text-align: center;
+  width: 100%;
+}

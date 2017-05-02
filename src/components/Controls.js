@@ -41,11 +41,7 @@ class Controls extends Component {
             }
         } = this;
 
-        const options = [
-            { value: '1', label: 'Easy' },
-            { value: '2', label: 'Normal' },
-            { value: '3', label: 'Hard' },
-        ];
+        
         return (
             <form className="controls" onChange={onChange}>
                 <div className="input input--select">
