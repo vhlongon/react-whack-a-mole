@@ -14,8 +14,7 @@ class Game extends Component {
 		super(props);
 		this.state = {
 			hasStarted: false,
-			hasEnded: false,
-			timeUp: false,
+			isTimeUp: false,
 			score: 0,
 			remainingTime: 0,
 			holes: []
@@ -40,7 +39,7 @@ class Game extends Component {
 	}
 
 	showMole = level => {
-		const [min, max] = [200 / level, 1000 / level];
+		const [min, max] = [(300 / level), (1500 / level)];
 		const time = utils.generateRandomTime(min, max);
 		const { id: randomId } = this.getRandomHole();
 
@@ -57,7 +56,7 @@ class Game extends Component {
 				)
 			}));
 
-			!this.state.timeUp && this.showMole(min, max);
+			!this.state.isTimeUp && this.showMole(min, max);
 		}, time);
 
 	}
@@ -72,17 +71,16 @@ class Game extends Component {
 	}
 
 	start = ({ duration, level, quantity }) => {
-		console.log(quantity)
 		this.timeout = setTimeout(() =>
 			this.onEnd(), duration * 1000
 		);
-		this.setState({
-			timeUp: false,
+		this.setState(prevState => ({
+			isTimeUp: false,
 			hasStarted: true,
 			remainingTime: duration,
 			holes: utils.generateHoles({ amount: quantity })
-		});
-		this.showMole(level);
+		}), () => this.showMole(level));
+
 		this.remainingInterval = setInterval(() => {
 			this.setState({ remainingTime: this.state.remainingTime - 1 });
 			(this.state.remainingTime === 0) && clearInterval(this.remainingInterval);
@@ -93,8 +91,7 @@ class Game extends Component {
 		this.setState(prevState => ({
 			score: 0,
 			hasStarted: false,
-			hasEnded: false,
-			timeUp: true,
+			isTimeUp: true,
 			remainingTime: values.duration,
 			holes: prevState.holes.map(
 				hole => ({ ...hole, isActive: false })
@@ -105,13 +102,17 @@ class Game extends Component {
 	}
 
 	onEnd = () => {
-		this.timeUp = true;
 		this.setState({
+      score: 0,
 			hasStarted: false,
-			hasEnded: true
+      isTimeUp: true
 		});
-		// TODO show a time's up funny text
 	}
+
+  closeTimeUp = () => {
+    this.setState({isTimeUp: false});
+  }
+
 
 	render() {
 		const {
@@ -119,13 +120,13 @@ class Game extends Component {
 			score,
 			holes,
 			hasStarted,
-			hasEnded,
 			remainingTime,
-			timeUp
+			isTimeUp
 			},
 			start,
 			reset,
-			onMoleClick
+			onMoleClick,
+      closeTimeUp
 			} = this;
 		return (
 			<div className="game">
@@ -148,10 +149,10 @@ class Game extends Component {
 					onMoleClick={onMoleClick}
 				/>
 				<TimeUp
-					show={timeUp}
+					show={isTimeUp}
 					text="Time's up!"
 					tag="h2"
-					onClick={() => this.setState({ timeUp: false })}
+					onCloseClick={closeTimeUp}
 				/>
 			</div>
 		);

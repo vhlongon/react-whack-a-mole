@@ -1,0 +1,35 @@
+.input {
+    background:rgba(255,255,255,0.2);
+    display: flex;
+    justify-content:  space-around;
+    align-items: center;
+    font-size:  2em;
+    padding: 1.5rem;
+    line-height:1;
+    border-radius:1rem;
+    outline: none;
+}
+
+.input--select {
+    /*flex-direction: column;*/
+}
+
+.input__element {
+    background: none;
+    padding: 0;
+    border: 0;
+    font-size: 1em;
+    text-align: right;
+    max-width: 1.5em;
+    font-family: 'Amatic SC', cursive;
+}
+
+.input__element--select {
+    max-width: none;
+}
+
+.input__element:active,
+.input__element:focus {
+    outline: none;
+    border: 0;
+}

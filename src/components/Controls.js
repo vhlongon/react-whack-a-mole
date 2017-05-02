@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
+import Input from './Input';
+import './Controls.css';
 
 class Controls extends Component {
     constructor(props) {
@@ -11,8 +13,8 @@ class Controls extends Component {
         }
     }
 
-    onChange = ({target: { name, value }}) =>
-        this.setState({ [name]: parseInt(value) });
+    onChange = ({ target: { name, value } }) =>
+        this.setState({ [name]: parseInt(value, 10) });
 
     handleSubmit = e => {
         e.preventDefault();
@@ -20,11 +22,11 @@ class Controls extends Component {
     }
 
     handleReset = e => {
-        this.setState({
+        this.setState(prevState => ({
             level: 1,
-            duration: 10
-        });
-        this.props.onReset(this.state);
+            duration: 10,
+            quantity: 6
+        }), () => this.props.onReset(this.state));
     }
 
     render() {
@@ -33,38 +35,49 @@ class Controls extends Component {
             handleReset,
             onChange,
             state: {
-                level, 
+                level,
                 duration,
                 quantity
             }
         } = this;
+
+        const options = [
+            { value: '1', label: 'Easy' },
+            { value: '2', label: 'Normal' },
+            { value: '3', label: 'Hard' },
+        ];
         return (
-            <form onChange={onChange}>
-                <select name="level" id="level" defaultValue={level}>
-                    <option value="1">Easy</option>
-                    <option value="2">Normal</option>
-                    <option value="3">Hard</option>
-                </select>
-                <input 
-                    type="number" 
-                    name="duration" 
-                    id="duration" 
-                    defaultValue={duration} 
+            <form className="controls" onChange={onChange}>
+                <div className="input input--select">
+                    <label htmlFor="level">Level:  </label>
+                    <select className="input__element input__element--select" name="level" defaultValue={level}>
+                        <option value="1">Easy</option>
+                        <option value="2">Normal</option>
+                        <option value="3">Hard</option>
+                    </select>
+                </div>
+                <Input
+                    className="controls__input"
+                    type="number"
+                    name="duration"
+                    id="duration"
+                    defaultValue={duration}
                 />
-                <input 
-                    type="number" 
-                    name="quantity" 
-                    id="quantity" 
-                    defaultValue={quantity} 
+                <Input
+                    className="controls__input"
+                    type="number"
+                    name="quantity"
+                    id="quantity"
+                    defaultValue={quantity}
                 />
                 <Button
-                    className="topbar__btn"
+                    className="controls__input"
                     type="submit"
                     onClick={handleSubmit}
                     text="Start game"
                 />
                 <Button
-                    className="topbar__btn"
+                    className="controls__input"
                     type="reset"
                     onClick={handleReset}
                     text="Reset game"
