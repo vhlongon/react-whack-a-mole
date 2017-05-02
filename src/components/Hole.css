@@ -1,7 +1,9 @@
 .hole {
-  flex: 1 0 33.33%;
+  flex: 0 0 calc(25% - 2em);
+  margin: 1em;
   overflow: hidden;
   position: relative;
+  height: 200px;
 }
 
 .hole:after {

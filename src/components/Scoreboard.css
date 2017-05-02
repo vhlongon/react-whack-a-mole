@@ -1,4 +1,5 @@
 .scoreboard {
+  width: 100%;
 }
 
 .scoreboard__score {
@@ -9,6 +10,7 @@
 }
 
 .scoreboard__title {
+  width: 100%;
   text-align: center;
   font-size: 10rem;
   line-height:1;
