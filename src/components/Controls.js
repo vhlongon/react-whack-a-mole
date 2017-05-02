@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import Input from './Input';
+import PropTypes from 'prop-types';
 import './Controls.css';
 
 class Controls extends Component {
@@ -11,6 +12,11 @@ class Controls extends Component {
             duration: 10,
             quantity: 6,
         }
+    }
+
+    static propTypes = {
+        onStart: PropTypes.func.isRequired,
+        onReset: PropTypes.func.isRequired
     }
 
     onChange = ({ target: { name, value } }) =>

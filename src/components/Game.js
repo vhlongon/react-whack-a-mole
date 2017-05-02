@@ -21,7 +21,7 @@ class Game extends Component {
     }
 
     // flags used for showing random holes logic, but we don't want those
-    // as state since we no re-render is necessary when these change
+    // as state since no re-render is necessary when these change
     this.lastHole = null;
     this.timeout = null;
     this.remainingInterval = null;
@@ -71,10 +71,12 @@ class Game extends Component {
   }
 
   start = ({ duration, level, quantity }) => {
-    if (this.state.hasStarted) return
+    if (this.state.hasStarted) return;
     this.timeout = setTimeout(() =>
       this.onEnd(), duration * 1000
     );
+    // using setState callback as second parameter here to make sure
+    // the holes are already in place when running showHole()
     this.setState(prevState => ({
       isTimeUp: false,
       hasStarted: true,
@@ -92,7 +94,6 @@ class Game extends Component {
     this.setState(prevState => ({
       score: 0,
       hasStarted: false,
-      // isTimeUp: true,
       remainingTime: values.duration,
       holes: []
     }));

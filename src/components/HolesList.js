@@ -11,7 +11,7 @@ const HolesList = ({ items, onMoleClick }) => (
           key={id}
           id={id}
           isActive={isActive}
-          onMoleClick={onMoleClick}
+          onClick={onMoleClick}
         />
       )
     }

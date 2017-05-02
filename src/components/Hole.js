@@ -10,13 +10,14 @@ class Hole extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     isActive: PropTypes.bool,
+    onClick: PropTypes.func.isRequired
   }
  
   handleClick = e => {
     // if the click is not from an actual user click return, no cheating!
     if (!e.isTrusted) return;
-    const { onMoleClick, id } = this.props;
-    onMoleClick(id);
+    const { onClick, id } = this.props;
+    onClick(id);
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {
