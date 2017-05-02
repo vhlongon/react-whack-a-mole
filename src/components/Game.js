@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ScoreBoard from './Scoreboard';
 import HolesList from './HolesList';
 import Logo from './Logo';
-import TopBar from './TopBar';
+import Controls from './Controls';
 import Counter from './Counter';
 import TimeUp from './TimeUp';
 import * as utils from '../utils';
@@ -15,20 +15,15 @@ class Game extends Component {
 		this.state = {
 			hasStarted: false,
 			hasEnded: false,
+			timeUp: false,
 			score: 0,
-			// TODO: get those values from a form instead
-			duration: 10, // seconds
-			// initally set to the same as duration
-			remainingTime: 10,
-			minSpeed: 200,
-			maxSpeed: 1000,
-			holes: utils.generateHoles({ amount: 6 })
+			remainingTime: 0,
+			holes: []
 		}
 
 		// flags used for showing random holes logic, but we don't want those
 		// as state since we no re-render is necessary when these change
 		this.lastHole = null;
-		this.timeUp = false;
 		this.timeout = null;
 		this.remainingInterval = null;
 	}
@@ -44,9 +39,9 @@ class Game extends Component {
 		return currentHole;
 	}
 
-	showMole = () => {
-		const { minSpeed, maxSpeed } = this.state;
-		const time = utils.generateRandomTime(minSpeed, maxSpeed);
+	showMole = level => {
+		const [min, max] = [200 / level, 1000 / level];
+		const time = utils.generateRandomTime(min, max);
 		const { id: randomId } = this.getRandomHole();
 
 		this.setState(prevState => ({
@@ -62,7 +57,7 @@ class Game extends Component {
 				)
 			}));
 
-			!this.timeUp && this.showMole();
+			!this.state.timeUp && this.showMole(min, max);
 		}, time);
 
 	}
@@ -76,41 +71,44 @@ class Game extends Component {
 		}));
 	}
 
-	start = e => {
-		this.remainingTime = this.state.duration;
-		this.reset();
-		this.timeUp = false;
-		this.showMole();
+	start = ({ duration, level, quantity }) => {
+		console.log(quantity)
 		this.timeout = setTimeout(() =>
-			this.onEnd(), this.state.duration * 1000
+			this.onEnd(), duration * 1000
 		);
-		this.setState({ hasStarted: true });
+		this.setState({
+			timeUp: false,
+			hasStarted: true,
+			remainingTime: duration,
+			holes: utils.generateHoles({ amount: quantity })
+		});
+		this.showMole(level);
 		this.remainingInterval = setInterval(() => {
 			this.setState({ remainingTime: this.state.remainingTime - 1 });
 			(this.state.remainingTime === 0) && clearInterval(this.remainingInterval);
 		}, 1000)
 	}
 
-	reset = e => {
+	reset = values => {
 		this.setState(prevState => ({
-			holes: prevState.holes.map(
-				hole => ({ ...hole, isActive: false })
-			),
 			score: 0,
 			hasStarted: false,
 			hasEnded: false,
-			remainingTime: this.state.duration
+			timeUp: true,
+			remainingTime: values.duration,
+			holes: prevState.holes.map(
+				hole => ({ ...hole, isActive: false })
+			)
 		}));
-		this.timeUp = true;
 		clearInterval(this.remainingInterval);
 		clearTimeout(this.timeout);
 	}
 
 	onEnd = () => {
 		this.timeUp = true;
-		this.setState({ 
-			hasStarted: false, 
-			hasEnded: true 
+		this.setState({
+			hasStarted: false,
+			hasEnded: true
 		});
 		// TODO show a time's up funny text
 	}
@@ -119,19 +117,19 @@ class Game extends Component {
 		const {
     	state: {
 			score,
-				holes,
-				hasStarted,
-				hasEnded,
-				remainingTime
+			holes,
+			hasStarted,
+			hasEnded,
+			remainingTime,
+			timeUp
 			},
-				start,
-				reset,
-				onMoleClick
+			start,
+			reset,
+			onMoleClick
 			} = this;
-
 		return (
 			<div className="game">
-				<TopBar
+				<Controls
 					onStart={start}
 					onReset={reset}
 				/>
@@ -149,11 +147,11 @@ class Game extends Component {
 					items={holes}
 					onMoleClick={onMoleClick}
 				/>
-				<TimeUp 
-					show={hasEnded} 
-					text="Time's up!" 
+				<TimeUp
+					show={timeUp}
+					text="Time's up!"
 					tag="h2"
-					onClick={() => reset()} 
+					onClick={() => this.setState({ timeUp: false })}
 				/>
 			</div>
 		);
