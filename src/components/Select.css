@@ -1,4 +1,4 @@
-.input {
+.select {
     background:rgba(255,255,255,0.2);
     display: flex;
     justify-content:  space-around;
@@ -10,35 +10,27 @@
     outline: none;
 }
 
-.input.is-disabled,
-.input--select.is-disabled {
+.select.is-disabled {
     color: rgba(255,255,255,0.4);
     background:rgba(0,0,0,0.1);
 }
-.input--select {
-    /*flex-direction: column;*/
-}
 
-.input__element {
+.select__element {
     background: none;
     padding: 0;
     border: 0;
     font-size: 1em;
     text-align: right;
-    max-width: 1.5em;
+    max-width: none;
     font-family: 'Amatic SC', cursive;
 }
 
-.is-disabled .input__element {
+.is-disabled .select__element {
     color: rgba(255,255,255,0.4);
 }
 
-.input__element--select {
-    max-width: none;
-}
-
-.input__element:active,
-.input__element:focus {
+.select__element:active,
+.select__element:focus {
     outline: none;
     border: 0;
 }

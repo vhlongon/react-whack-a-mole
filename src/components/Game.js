@@ -71,7 +71,7 @@ class Game extends Component {
   }
 
   start = ({ duration, level, quantity }) => {
-    if (this.state.hasStarted) return;
+    //if (this.state.hasStarted) return;
     this.timeout = setTimeout(() =>
       this.onEnd(), duration * 1000
     );
@@ -90,7 +90,7 @@ class Game extends Component {
     }, 1000)
   }
 
-  reset = values => {
+  stop = values => {
     this.setState(prevState => ({
       score: 0,
       hasStarted: false,
@@ -126,7 +126,7 @@ class Game extends Component {
       isTimeUp
 			},
       start,
-      reset,
+      stop,
       onMoleClick,
       closeTimeUp
 			} = this;
@@ -134,7 +134,8 @@ class Game extends Component {
       <div className="game">
         <Controls
           onStart={start}
-          onReset={reset}
+          onStop={stop}
+          hasStarted={hasStarted}
         />
         <Logo height={100} />
         <ScoreBoard
