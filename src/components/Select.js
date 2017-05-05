@@ -28,8 +28,7 @@ class Select extends Component {
             name,
             disabled,
             className,
-            options,
-            defaultValue
+            options
         } = this.props;
         return (
             <div className={classnames('select', className, { 'is-disabled': disabled })}>
