@@ -73,7 +73,7 @@ class Controls extends Component {
                 <Input
                     className="controls__input"
                     type="number"
-                    min="0"
+                    min="6"
                     name="duration"
                     id="duration"
                     defaultValue={duration}
@@ -82,7 +82,7 @@ class Controls extends Component {
                 <Input
                     className="controls__input"
                     type="number"
-                    min="0"
+                    min="6"
                     name="quantity"
                     id="quantity"
                     defaultValue={quantity}
