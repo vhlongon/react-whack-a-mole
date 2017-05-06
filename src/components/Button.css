@@ -16,9 +16,14 @@ button {
     outline: none;
     -webkit-appearance: button; /* for input */
     -webkit-user-select: none; /* for button */
-       -moz-user-select: none;
-        -ms-user-select: none; 
-        user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn.is-disabled {
+    color: rgba(255,255,255,0.4);
+    background:rgba(0,0,0,0.1);
 }
 
 input::-moz-focus-inner,

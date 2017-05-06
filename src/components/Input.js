@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './Input.css';
 
-const Input = ({className, name, children, ...props}) => {
+const Input = ({className, name, children, disabled, ...props}) => {
     return (
-        <div className={classnames('input', className)}>
+        <div className={classnames('input', className, {'is-disabled': disabled})}>
             <label className="input__label" htmlFor={name}>{name}:</label>
-            <input className="input__element" {...props} name={name} />
+            <input className="input__element" {...props} name={name} disabled={disabled} />
             {children}
         </div>
     );
