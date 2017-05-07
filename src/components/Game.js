@@ -130,7 +130,7 @@ class Game extends Component {
       const newScoresData = {
         ...stored,
         [level]: currentLevel || [score]
-      }
+      };
       utils.saveToStorage(newScoresData);
       this.setState({ highscores: newScoresData });
     } else {
