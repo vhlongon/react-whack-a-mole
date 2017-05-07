@@ -1,0 +1,8 @@
+.counter {
+  font-size: 4em;
+  flex-basis: 100%;
+  line-height: 1;
+  text-align: center;
+  height: 1em;
+  margin: 1rem;
+}

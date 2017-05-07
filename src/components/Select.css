@@ -1,0 +1,36 @@
+.select {
+    background:rgba(255,255,255,0.2);
+    display: flex;
+    justify-content:  space-around;
+    align-items: center;
+    font-size:  2em;
+    padding: 1.5rem;
+    line-height:1;
+    border-radius:1rem;
+    outline: none;
+}
+
+.select.is-disabled {
+    color: rgba(255,255,255,0.4);
+    background:rgba(0,0,0,0.1);
+}
+
+.select__element {
+    background: none;
+    padding: 0;
+    border: 0;
+    font-size: 1em;
+    text-align: right;
+    max-width: none;
+    font-family: 'Amatic SC', cursive;
+}
+
+.is-disabled .select__element {
+    color: rgba(255,255,255,0.4);
+}
+
+.select__element:active,
+.select__element:focus {
+    outline: none;
+    border: 0;
+}

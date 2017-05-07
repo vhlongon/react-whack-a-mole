@@ -1,0 +1,12 @@
+.holes-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto 2em auto;
+    cursor: url('../images/hammer.ico'), auto;
+}
+
+.holes-list.is-pressed {
+    cursor: url('../images/hammer-down.ico'), auto;
+}

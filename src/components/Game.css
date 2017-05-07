@@ -1,0 +1,33 @@
+.game {
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2em auto;
+}
+
+.game__btn {
+  position: absolute;
+  right: 0;
+}
+
+.game__placeholder-text {
+  font-size: 36px;
+  text-align: center;
+  width: 100%;
+  margin: 1rem;
+}
+
+.game__no-score-text {
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+  margin: 10px;
+}
+
+@media(min-width: 420px) {
+    .game__placeholder-text {
+        font-size: 48px;
+    }   
+}
