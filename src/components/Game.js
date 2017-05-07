@@ -4,6 +4,7 @@ import HolesList from './HolesList';
 import Controls from './Controls';
 import Counter from './Counter';
 import TimeUp from './TimeUp';
+import HighscoreBoard from './HighscoreBoard';
 import * as utils from '../utils';
 import { isEqual, find } from 'lodash';
 import './Game.css';
@@ -19,6 +20,7 @@ class Game extends Component {
       duration: 10,
       quantity: 6,
       level: null,
+      highscores: utils.readFromStorage(),
       holes: []
     }
 
@@ -124,13 +126,17 @@ class Game extends Component {
     const { score, level } = this.state;
     if (utils.isInStorage()) {
       const stored = utils.readFromStorage();
-      const currentLevel = stored[level] ? stored[level].slice(0,2) : null;
-      utils.saveToStorage({
-        ...stored, 
-        [level]: currentLevel ? [...currentLevel, score].sort((a,b) => b - a) : [score]
-      });
+      const currentLevel = stored[level] ? stored[level].slice(0, 2) : null;
+      const newScoresData = {
+        ...stored,
+        [level]: currentLevel ? [...currentLevel, score].sort((a, b) => b - a) : [score]
+      }
+      utils.saveToStorage(newScoresData);
+      this.setState({ highscores: newScoresData });
     } else {
-      utils.saveToStorage({[level]: [score] })
+      const scoresData = { [level]: [score] };
+      utils.saveToStorage(scoresData);
+      this.setState({ highscores: scoresData });
     }
   }
 
@@ -141,10 +147,8 @@ class Game extends Component {
     });
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !(isEqual(this.state, nextState))
-  }
-
+  shouldComponentUpdate = (nextProps, nextState) =>
+    !(isEqual(this.state, nextState));
 
   render() {
     const {
@@ -153,7 +157,8 @@ class Game extends Component {
       holes,
       hasStarted,
       remainingTime,
-      isTimeUp
+      isTimeUp,
+      highscores
 			},
       start,
       stop,
@@ -163,6 +168,10 @@ class Game extends Component {
 
     return (
       <div className="game">
+        {highscores ?
+          <HighscoreBoard scores={highscores} /> :
+          <h3 className="game__no-score-text">No Scores yet...</h3>
+        }
         <Controls
           onStart={start}
           onStop={stop}

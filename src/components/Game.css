@@ -19,6 +19,13 @@
   margin: 1rem;
 }
 
+.game__no-score-text {
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+  margin: 10px;
+}
+
 @media(min-width: 420px) {
     .game__placeholder-text {
         font-size: 48px;
