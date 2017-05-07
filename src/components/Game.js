@@ -18,6 +18,7 @@ class Game extends Component {
       remainingTime: 0,
       duration: 10,
       quantity: 6,
+      level: null,
       holes: []
     }
 
@@ -92,6 +93,7 @@ class Game extends Component {
       isTimeUp: false,
       hasStarted: true,
       remainingTime: duration,
+      level,
       holes: utils.generateItems({ amount: quantity })
     }), () => this.showMole(level));
     // set the timer for the game duration so we can show the 
@@ -119,6 +121,17 @@ class Game extends Component {
       hasStarted: false,
       isTimeUp: true
     });
+    const { score, level } = this.state;
+    if (utils.isInStorage()) {
+      const stored = utils.readFromStorage();
+      const currentLevel = stored[level] ? stored[level].slice(0,2) : null;
+      utils.saveToStorage({
+        ...stored, 
+        [level]: currentLevel ? [...currentLevel, score].sort((a,b) => b - a) : [score]
+      });
+    } else {
+      utils.saveToStorage({[level]: [score] })
+    }
   }
 
   closeTimeUp = () => {
@@ -137,10 +150,10 @@ class Game extends Component {
     const {
     	state: {
         score,
-        holes,
-        hasStarted,
-        remainingTime,
-        isTimeUp
+      holes,
+      hasStarted,
+      remainingTime,
+      isTimeUp
 			},
       start,
       stop,
