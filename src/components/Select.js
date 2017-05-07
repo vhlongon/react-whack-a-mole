@@ -22,6 +22,9 @@ class Select extends Component {
         this.setState({value});
     }
 
+    shouldComponentUpdate = () => false
+    
+
     render() {
         const {
             children,

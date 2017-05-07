@@ -6,6 +6,8 @@ import Controls from './Controls';
 import Counter from './Counter';
 import TimeUp from './TimeUp';
 import * as utils from '../utils';
+import { isEqual, find } from 'lodash';
+
 import './Game.css';
 
 
@@ -20,15 +22,15 @@ class Game extends Component {
       holes: []
     }
 
-    // flags used for showing random holes logic, but we don't want those
+    // flags used for showing random holes logic, and storing the game
+    // remaining counter and timeout, we don't want those
     // as state since no re-render is necessary when these change
     this.lastHole = null;
-    this.timeout = null;
+    this.remainingTimeout = null;
     this.remainingInterval = null;
   }
 
-  getRandomHole = () => {
-    const { holes } = this.state;
+  getRandomHole = holes => {
     const currentHole = holes[utils.generateRandomIndex(holes)];
 
     if (currentHole === this.lastHole) {
@@ -41,7 +43,7 @@ class Game extends Component {
   showMole = level => {
     const [min, max] = [(300 / level), (1500 / level)];
     const time = utils.generateRandomTime(min, max);
-    const { id: randomId } = this.getRandomHole();
+    const { id: randomId } = this.getRandomHole(this.state.holes);
 
     this.setState(prevState => ({
       holes: prevState.holes.map(hole =>
@@ -49,19 +51,28 @@ class Game extends Component {
       )
     }));
 
+    // we use this timeout to hide the current active mole in state
+    // after the randomly generate time for it has passed
+    // but first we make sure that it hasn't been clicked on yet 
+    // (onMoleClick when you score a point) and its status is still active
+    // otherwise we will tigger an extra / unnecessary rerender
     setTimeout(() => {
-      this.setState(prevState => ({
-        holes: prevState.holes.map(hole =>
-          hole.id === randomId ? { ...hole, isActive: false } : hole
-        )
-      }));
+      const currentHole = find(this.state.holes, { 'id': randomId });
+      if (currentHole && currentHole.isActive) {
+        this.setState(prevState => ({
+          holes: prevState.holes.map(hole =>
+            hole.id === randomId ? { ...hole, isActive: false } : hole
+          )
+        }));
+      }
 
       (!this.state.isTimeUp && this.state.holes.length) && this.showMole(min, max);
     }, time);
-
   }
 
   onMoleClick = id => {
+    // besides updating the score, as make sure to set the current mole
+    // active status to false to immediately hide it upon hit 
     this.setState(prevState => ({
       holes: prevState.holes.map(hole =>
         hole.id === id ? { ...hole, isActive: false } : hole
@@ -71,8 +82,8 @@ class Game extends Component {
   }
 
   start = ({ duration, level, quantity }) => {
-    //if (this.state.hasStarted) return;
-    this.timeout = setTimeout(() =>
+    // set the necessary state update once the game duration has come to on end
+    this.remainingTimeout = setTimeout(() =>
       this.onEnd(), duration * 1000
     );
     // using setState callback as second parameter here to make sure
@@ -81,9 +92,10 @@ class Game extends Component {
       isTimeUp: false,
       hasStarted: true,
       remainingTime: duration,
-      holes: utils.generateHoles({ amount: quantity })
+      holes: utils.generateItems({ amount: quantity })
     }), () => this.showMole(level));
-
+    // set the timer for the game duration so we can show the 
+    // reamining time during a game session
     this.remainingInterval = setInterval(() => {
       this.setState({ remainingTime: this.state.remainingTime - 1 });
       (this.state.remainingTime === 0) && clearInterval(this.remainingInterval);
@@ -91,14 +103,15 @@ class Game extends Component {
   }
 
   stop = values => {
+    // reset the game and clear the timer and session
     this.setState(prevState => ({
+      holes: [],
       score: 0,
       hasStarted: false,
       remainingTime: values.duration,
-      holes: []
     }));
     clearInterval(this.remainingInterval);
-    clearTimeout(this.timeout);
+    clearTimeout(this.remainingTimeout);
   }
 
   onEnd = () => {
@@ -115,11 +128,15 @@ class Game extends Component {
     });
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(isEqual(this.state, nextState))
+  }
+
 
   render() {
     const {
     	state: {
-			score,
+        score,
       holes,
       hasStarted,
       remainingTime,
@@ -130,6 +147,7 @@ class Game extends Component {
       onMoleClick,
       closeTimeUp
 			} = this;
+
     return (
       <div className="game">
         <Controls
@@ -151,7 +169,7 @@ class Game extends Component {
           !hasStarted && !isTimeUp ?
             <h2 className="game__placeholder-text">Choose your game!</h2> :
             <HolesList
-              items={holes}
+              holes={holes}
               onMoleClick={onMoleClick}
             />
         }

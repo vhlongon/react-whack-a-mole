@@ -21,10 +21,10 @@ class Controls extends Component {
         onStop: PropTypes.func.isRequired
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return !(isEqual(nextState, this.state)) || 
+    shouldComponentUpdate = (nextProps, nextState) =>
+        !(isEqual(nextState, this.state)) || 
             nextProps.hasStarted !== this.props.hasStarted
-    }
+    
 
     onChange = ({ target: { name, value } }) =>
         this.setState(prevState => ({
@@ -60,8 +60,6 @@ class Controls extends Component {
             { label: 'Normal', value: '2' },
             { label: 'Hard', value: '3' }
         ];
-
-        // console.log(level)
 
         return (
             <form className="controls" onChange={onChange}>

@@ -20,9 +20,9 @@ class Hole extends Component {
     onClick(id);
   }
 
-  shouldComponentUpdate = (nextProps, nextState) => {
-    return nextProps.isActive !== this.props.isActive;
-  }
+  shouldComponentUpdate = (nextProps, nextState) => 
+    nextProps.isActive !== this.props.isActive;
+  
 
   render() {
     const { id, isActive } = this.props;

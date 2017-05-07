@@ -18,8 +18,7 @@ Input.propTypes = {
     className: PropTypes.string,
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
-    defaultValue: PropTypes.any,
-    children: PropTypes.node
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
 }
 
 export default Input;

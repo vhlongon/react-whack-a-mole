@@ -9,7 +9,8 @@
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "why-did-you-update": "0.0.8"
   },
   "scripts": {
     "start": "react-scripts start",

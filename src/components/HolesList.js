@@ -3,7 +3,7 @@ import Hole from './Hole';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './HolesList.css';
-
+import { isEqual } from 'lodash';
 
 
 class HolesList extends Component {
@@ -12,14 +12,20 @@ class HolesList extends Component {
     super(props);
     this.state = { isPressed: false }
   }
+  
   static defaultProps = {
-    items: []
+    holes: []
   }
 
   static propTypes = {
-    items: PropTypes.array.isRequired,
+    holes: PropTypes.array.isRequired,
     onMoleClick: PropTypes.func.isRequired
   }
+
+  shouldComponentUpdate = (nextProps, nextState) => 
+    !(isEqual(nextProps.holes, this.props.holes)) || nextState.isPressed !== this.state.isPressed;
+  
+  
 
   onMouseDown = e => {
     this.setState({ isPressed: true });
@@ -30,7 +36,7 @@ class HolesList extends Component {
   }
 
   render() {
-    const { items, onMoleClick } = this.props;
+    const { holes, onMoleClick } = this.props;
     return (
       <div
         className={classnames('holes-list', { 'is-pressed': this.state.isPressed })}
@@ -38,7 +44,7 @@ class HolesList extends Component {
         onMouseUp={this.onMouseUp}
       >
         {
-          items.map(({ isActive, id }) =>
+          holes.map(({ isActive, id }) =>
             <Hole
               key={id}
               id={id}
@@ -53,29 +59,3 @@ class HolesList extends Component {
 }
 
 export default HolesList;
-
-// const HolesList = ({ items, onMoleClick }) => (
-//   <div className="holes-list" onMouseDown={e => console.log(e)}>
-//     {
-//       items.map(({ isActive, id }) =>
-//         <Hole
-//           key={id}
-//           id={id}
-//           isActive={isActive}
-//           onClick={onMoleClick}
-//         />
-//       )
-//     }
-//   </div>
-// );
-
-// HolesList.defaultProps = {
-//   items: []
-// };
-
-// HolesList.propTypes = {
-//   items: PropTypes.array.isRequired,
-//   onMoleClick: PropTypes.func.isRequired
-// };
-
-// export default HolesList;
