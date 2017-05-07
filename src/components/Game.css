@@ -13,7 +13,14 @@
 }
 
 .game__placeholder-text {
-  font-size: 48px;
+  font-size: 36px;
   text-align: center;
   width: 100%;
+  margin: 1rem;
+}
+
+@media(min-width: 420px) {
+    .game__placeholder-text {
+        font-size: 48px;
+    }   
 }

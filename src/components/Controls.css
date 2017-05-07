@@ -4,9 +4,15 @@
     margin: 2em 0;
     flex-grow: 1;
     flex-shrink: 1;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .controls > * {
+    margin: 0 .5em;
+}
 
+@media(min-width: 420px) {
+    .controls > * {
+        margin: 0 1em;
+    }   
 }

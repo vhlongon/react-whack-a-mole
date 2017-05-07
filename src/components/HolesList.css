@@ -1,9 +1,9 @@
 .holes-list {
     width: 100%;
-    display:flex;
+    display: flex;
     justify-content: center;
-    flex-wrap:wrap;
-    margin:0 auto 2em auto;
+    flex-wrap: wrap;
+    margin: 0 auto 2em auto;
     cursor: url('../images/hammer.ico'), auto;
 }
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Button from './Button';
-import Input from './Input';
 import Select from './Select';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
@@ -9,11 +8,7 @@ import './Controls.css';
 class Controls extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            level: 1,
-            duration: 10,
-            quantity: 6
-        }
+        this.state = { level: 1 }
     }
 
     static propTypes = {
@@ -48,8 +43,6 @@ class Controls extends Component {
             onChange,
             state: {
                 level,
-                duration,
-                quantity
             },
             props: {
                 hasStarted
@@ -67,24 +60,6 @@ class Controls extends Component {
                     name="level"
                     disabled={hasStarted}
                     defaultValue={level}
-                />
-                <Input
-                    className="controls__input"
-                    type="number"
-                    min="6"
-                    name="duration"
-                    id="duration"
-                    defaultValue={duration}
-                    disabled={hasStarted}
-                />
-                <Input
-                    className="controls__input"
-                    type="number"
-                    min="6"
-                    name="quantity"
-                    id="quantity"
-                    defaultValue={quantity}
-                    disabled={hasStarted}
                 />
                 <Button
                     className="controls__input"

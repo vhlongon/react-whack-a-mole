@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import ScoreBoard from './Scoreboard';
+import Score from './Score';
 import HolesList from './HolesList';
-import Logo from './Logo';
 import Controls from './Controls';
 import Counter from './Counter';
 import TimeUp from './TimeUp';
 import * as utils from '../utils';
 import { isEqual, find } from 'lodash';
-
 import './Game.css';
-
 
 class Game extends Component {
   constructor(props) {
@@ -19,6 +16,8 @@ class Game extends Component {
       isTimeUp: false,
       score: 0,
       remainingTime: 0,
+      duration: 10,
+      quantity: 6,
       holes: []
     }
 
@@ -81,7 +80,8 @@ class Game extends Component {
     }));
   }
 
-  start = ({ duration, level, quantity }) => {
+  start = ({ level }) => {
+    const { duration, quantity } = this.state
     // set the necessary state update once the game duration has come to on end
     this.remainingTimeout = setTimeout(() =>
       this.onEnd(), duration * 1000
@@ -102,13 +102,13 @@ class Game extends Component {
     }, 1000)
   }
 
-  stop = values => {
+  stop = () => {
     // reset the game and clear the timer and session
     this.setState(prevState => ({
       holes: [],
       score: 0,
       hasStarted: false,
-      remainingTime: values.duration,
+      remainingTime: this.state.duration,
     }));
     clearInterval(this.remainingInterval);
     clearTimeout(this.remainingTimeout);
@@ -137,10 +137,10 @@ class Game extends Component {
     const {
     	state: {
         score,
-      holes,
-      hasStarted,
-      remainingTime,
-      isTimeUp
+        holes,
+        hasStarted,
+        remainingTime,
+        isTimeUp
 			},
       start,
       stop,
@@ -155,8 +155,7 @@ class Game extends Component {
           onStop={stop}
           hasStarted={hasStarted}
         />
-        <Logo height={100} />
-        <ScoreBoard
+        <Score
           title="(Re)Whack-a-mole!"
           score={score}
         />

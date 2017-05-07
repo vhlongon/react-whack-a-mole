@@ -1,9 +1,9 @@
 .hole {
-  flex: 0 0 calc(25% - 2em);
-  margin: 1em;
+  flex: 0 0 calc(33.33% - 1em);
+  margin: .5em;
   overflow: hidden;
   position: relative;
-  height: 200px;
+  height: 160px;
 }
 
 .hole:after {
@@ -31,4 +31,10 @@
 
 .up .hole__mole {
   top:0;
+}
+
+@media(min-width: 420px) {
+    .hole {
+        height: 250px;
+    }   
 }
