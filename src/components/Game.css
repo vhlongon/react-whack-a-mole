@@ -4,7 +4,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 4em auto;
+  margin: 2em auto;
 }
 
 .game__btn {
@@ -17,6 +17,13 @@
   text-align: center;
   width: 100%;
   margin: 1rem;
+}
+
+.game__no-score-text {
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+  margin: 10px;
 }
 
 @media(min-width: 420px) {

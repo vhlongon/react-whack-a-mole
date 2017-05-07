@@ -22,4 +22,4 @@ export const isInStorage = (item = storageItem) =>
     storage.getItem(item) ? true : false;
 
 export const readFromStorage = (item = storageItem) =>
-    isInStorage && JSON.parse(storage.getItem(item));
+    isInStorage ? JSON.parse(storage.getItem(item)): null;
